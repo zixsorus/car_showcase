@@ -16,7 +16,7 @@ export default function Home() {
 
   // filter states
   const [fuel, setFuel] = useState("");
-  const [year, setYear] = useState("2022");
+  const [year, setYear] = useState(2022);
 
   // pagination states
   const [limit, setLimit] = useState(10);
