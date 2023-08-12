@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 
-import { SearchMenufacturer } from "./";
+import { SearchManufacturer } from "./";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 
@@ -18,19 +18,20 @@ const SearchButton = ({ otherClasses } : {otherClasses : string}) => (
   </button>
 )
 
-const SearchBar = () => {
-    const [manufacturer, setManufacturer] = useState('');
-    const [model, setModel] = useState('')
+const SearchBar = ( {setManufacturer, setModel} ) => {
+    const [searchManufacturer, setSearchManufacturer] = useState('');
+    const [searchModel, setSearchModel] = useState('')
     const router = useRouter();
 
     const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault();
 
-      if (manufacturer === '' && model === '') {
+      if (searchManufacturer === '' && searchModel === '') {
         return alert('กรุณากรอกข้อมูลที่ต้องการ')
       }
 
-      updateSearchParams(model.toLowerCase(), manufacturer.toLowerCase())
+      setModel(searchModel)
+      setManufacturer(searchManufacturer)
     }
 
     const updateSearchParams = (model: string, manufacturer: string) => {
@@ -55,9 +56,9 @@ const SearchBar = () => {
   return (
     <form className="searchbar" onSubmit={handleSearch}>
         <div className="searchbar__item">
-            <SearchMenufacturer 
-                manufacturer={manufacturer}
-                setManufacturer={setManufacturer}
+            <SearchManufacturer 
+                selected={searchManufacturer}
+                setSelected={setSearchManufacturer}
             />
             <SearchButton otherClasses="sm:hidden" />
         </div>
@@ -73,9 +74,9 @@ const SearchBar = () => {
           <input 
             type="text"
             name="model"
-            value={model}
-            onChange={(e) => setModel(e.target.value)}
-            placeholder="Tiguan"
+            value={searchModel}
+            onChange={(e) => setSearchModel(e.target.value)}
+            placeholder="Z4...."
             className="searchbar__input"
           />
           <SearchButton otherClasses="sm:hidden" />
